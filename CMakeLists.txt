@@ -35,7 +35,9 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(Macropad Macropad.c )
+add_executable(Macropad 
+    src/main.c
+    src/buttons.c )
 
 pico_set_program_name(Macropad "Macropad")
 pico_set_program_version(Macropad "0.1")
@@ -46,7 +48,8 @@ pico_enable_stdio_usb(Macropad 1)
 
 # Add the standard library to the build
 target_link_libraries(Macropad
-        pico_stdlib)
+        pico_stdlib
+        hardware_gpio)
 
 # Add the standard include files to the build
 target_include_directories(Macropad PRIVATE
