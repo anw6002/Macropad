@@ -6,9 +6,9 @@
  * debouncing, and state changes.
  */
 
-#include "buttons.h"
-#include <stdio.h>
-#include "pico/stdlib.h"
+ #include "buttons.h"
+ #include <stdio.h>
+ #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 
 static const unsigned int BUTTON_PINS[BUTTON_COUNT] =
