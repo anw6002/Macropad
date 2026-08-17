@@ -18,4 +18,4 @@ void buttons_scan(void);
 
 // bool button_pressed(Button button);
 
-#endif  
+#endif  // buttons.h
