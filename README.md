@@ -6,7 +6,7 @@
 
 This project implements a custom USB macropad using the Raspberry Pi Pico W.
 The macropad is designed for League of Legends, providing dedicated QWER ability
-keys and a joystick for camera movement. The firmware is written in C using the
+keys, FG keys, and a future joystick expansion for character movement using League's new WASD support. The firmware is written in C using the
 Raspberry Pi Pico SDK, and the final hardware will be designed in KiCad and
 manufactured as a custom PCB.
 
@@ -15,7 +15,7 @@ manufactured as a custom PCB.
 - [x] Prototype button circuit on a breadboard
 - [x] Test each switch and verify wiring
 - [x] Develop firmware for button detection and debouncing
-- [ ] Implement USB HID keyboard functionality
+- [x] Implement USB HID keyboard functionality
 - [ ] Add macro support
 - [ ] Design the schematic in KiCad
 - [ ] Route and manufacture the PCB
@@ -23,7 +23,7 @@ manufactured as a custom PCB.
 - [ ] Design and print a case
 
 ## Technologies
-- C/C++
+- C
 - CAD (3D Printed Case)
 - Raspberry Pi Pico SDK
 - TinyUSB
