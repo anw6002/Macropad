@@ -48,27 +48,29 @@ void buttons_init(void)
  *
  * This function should be called periodically.
  */
-void buttons_scan(void)
+bool buttons_scan(ButtonEventData *event)
 {
     for (int i = 0; i < BUTTON_COUNT; i++)
     {
         bool current_state = (gpio_get(BUTTON_PINS[i]) == 0);
-        if (gpio_get(BUTTON_PINS[i]) == 0)
-        {
-            if (current_state != previous_state[i])
-            {
-                printf("Button %d pressed\n", i);
-                previous_state[i] = current_state;
-            }
-        }
-        else
-        {
-            if (current_state != previous_state[i])
-            {
-                printf("Button %d released\n", i);
-                previous_state[i] = current_state;
-            }
-        }
 
-    } 
+        if (current_state != previous_state[i])
+        {
+            event->button = (Button)i;
+
+            if (current_state)
+            {
+                event->event = BUTTON_PRESSED;
+            }
+            else
+            {
+                event->event = BUTTON_RELEASED;
+            }
+
+            previous_state[i] = current_state;
+
+            return true;
+        }
+    }
+    return false;
 }

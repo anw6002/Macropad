@@ -13,9 +13,20 @@ typedef enum
     BUTTON_D
 } Button;
 
+typedef enum
+{
+    BUTTON_PRESSED,
+    BUTTON_RELEASED
+} ButtonEvent;
+
+typedef struct
+{
+    Button button;
+    ButtonEvent event;
+} ButtonEventData;
+
+
 void buttons_init(void);
-void buttons_scan(void);
+bool buttons_scan(ButtonEventData *event);
 
-// bool button_pressed(Button button);
-
-#endif  // buttons.h
+#endif  // BUTTONS_H

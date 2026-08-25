@@ -9,7 +9,7 @@
 #include "tusb.h"
 
 void usb_hid_init(void) {
-    tusb_init();
+    tud_init(0);
 }
 
 void usb_hid_task(void) {
@@ -17,5 +17,13 @@ void usb_hid_task(void) {
 }
 
 void usb_hid_keypress(uint8_t key) {
-    // Implementation for sending keypress report
+    uint8_t keycode[6] = {0};
+    keycode[0] = key;
+
+    tud_hid_keyboard_report(0, 0, keycode); // report_id, modifier, const keycode
+}
+
+void usb_hid_keyrelease(void) {
+    uint8_t keycode[6] = {0};
+    tud_hid_keyboard_report(0, 0, keycode);
 }
