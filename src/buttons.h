@@ -1,16 +1,26 @@
+/**
+ * @file buttons.h
+ * @brief Public interface for the macropad button driver.
+ *
+ * Defines the available buttons, button events, and functions used
+ * to initialize and scan the macropad's button inputs.
+ */
+
 #ifndef BUTTONS_H
 #define BUTTONS_H
-
 #include <stdbool.h>
 
-#define BUTTON_COUNT 4
+#define BUTTON_COUNT 7
 
 typedef enum
 {
-    BUTTON_A,
-    BUTTON_B,
-    BUTTON_C,
-    BUTTON_D
+    BUTTON_Q,
+    BUTTON_W,
+    BUTTON_E,
+    BUTTON_R,
+    BUTTON_D,
+    BUTTON_F,
+    BUTTON_P
 } Button;
 
 typedef enum

@@ -11,16 +11,20 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 
+#define DEBOUNCE_MS 10
+
+static bool previous_state[BUTTON_COUNT];
+static absolute_time_t last_change[BUTTON_COUNT];
 static const unsigned int BUTTON_PINS[BUTTON_COUNT] =
 {
     15,
     14,
     13,
-    3
+    12,
+    11,
+    10,
+    9
 };
-
-static bool previous_state[BUTTON_COUNT];
-
 
 /**
  * @brief Initialize all button GPIOs.
@@ -38,24 +42,38 @@ void buttons_init(void)
     }
 }
 
-
 /**
- * @brief Scan all buttons for state changes.
+ * @brief Scan all buttons for debounced state changes.
  *
- * Reads each button, compares the current state with
- * the previous state, and generates one event when a
- * button is pressed or released.
+ * Reads each button and generates an event only when the
+ * new state has remained stable for the debounce period.
  *
- * This function should be called periodically.
+ * @param event Pointer to the event structure to populate.
+ * @return true if a debounced button event was detected,
+ *         false otherwise.
  */
 bool buttons_scan(ButtonEventData *event)
 {
     for (int i = 0; i < BUTTON_COUNT; i++)
     {
+        // Read current state of pin pressed (active-low)
         bool current_state = (gpio_get(BUTTON_PINS[i]) == 0);
-
+        
+        // If state changed, record new state and reset debounce timer
         if (current_state != previous_state[i])
         {
+            previous_state[i] = current_state;
+            last_change[i] = get_absolute_time();
+        }
+
+        // Accept the new state only if it has remained unchanged
+        // for the required debounce period.
+        if (current_state != stable_state[i] &&
+            absolute_time_diff_us(last_change[i], get_absolute_time())
+                >= DEBOUNCE_MS * 1000)
+        {
+            stable_state[i] = current_state;
+
             event->button = (Button)i;
 
             if (current_state)
@@ -67,10 +85,9 @@ bool buttons_scan(ButtonEventData *event)
                 event->event = BUTTON_RELEASED;
             }
 
-            previous_state[i] = current_state;
-
             return true;
         }
     }
-    return false;
+
+    return false; // No debounced button event detected
 }

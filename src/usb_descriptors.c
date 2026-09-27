@@ -83,7 +83,6 @@ uint8_t const * tud_hid_descriptor_report_cb(uint8_t instance)
 }
 
 // String Descriptors
-
 static uint16_t _desc_str[32];
 
 char const *string_desc_arr[] = {
