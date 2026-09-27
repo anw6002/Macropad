@@ -14,6 +14,7 @@
 #define DEBOUNCE_MS 10
 
 static bool previous_state[BUTTON_COUNT];
+static bool stable_state[BUTTON_COUNT];
 static absolute_time_t last_change[BUTTON_COUNT];
 static const unsigned int BUTTON_PINS[BUTTON_COUNT] =
 {
@@ -39,6 +40,10 @@ void buttons_init(void)
         gpio_init(BUTTON_PINS[i]);
         gpio_set_dir(BUTTON_PINS[i], GPIO_IN);
         gpio_pull_up(BUTTON_PINS[i]);
+
+        previous_state[i] = false;
+        stable_state[i] = false;
+        last_change[i] = get_absolute_time();
     }
 }
 

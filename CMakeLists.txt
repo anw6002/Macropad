@@ -39,7 +39,8 @@ add_executable(Macropad
     src/main.c
     src/buttons.c
     src/usb_hid.c
-    src/usb_descriptors.c )
+    src/usb_descriptors.c
+    src/keymap.c )
 
 pico_set_program_name(Macropad "Macropad")
 pico_set_program_version(Macropad "0.1")

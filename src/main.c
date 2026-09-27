@@ -10,10 +10,8 @@
 #include <stdio.h>
 #include "tusb.h"
 #include "usb_hid.h"
-//  #include "keymap.h"
+#include "keymap.h"
 #include "buttons.h"
-
-uint8_t button_to_key(Button button)
 
 int main(void)
 {
@@ -28,11 +26,19 @@ int main(void)
     {
         usb_hid_task();
         if (buttons_scan(&event))
-    {
-        // not yet implemented
-    }
+        {
+            uint8_t keycode = get_keycode(event.button);
 
-    sleep_ms(10);
+            if (event.event == BUTTON_PRESSED)
+            {
+            usb_hid_keypress(keycode);
+            }
+            else
+            {
+            usb_hid_keyrelease();
+            }
+        }
 
+        sleep_ms(6);
     }
 }
